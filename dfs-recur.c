@@ -30,7 +30,7 @@ int main() {
         printf("Enter edge (v1 v2): ");
         scanf("%d %d", &v1, &v2);
         adj[v1][v2] = 1;
-        adj[v2][v1] = 1; // Assuming undirected graph
+        adj[v2][v1] = 1; 
     }
 
     printf("Enter starting vertex: ");
