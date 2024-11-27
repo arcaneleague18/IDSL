@@ -59,8 +59,8 @@ int main() {
     struct Node *front = NULL, *rear = NULL;
     int choice, data;
 
-    while (1) {
         printf("\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Display\n5. Exit\n");
+    while (1) {
         printf("Enter your choice: ");
         scanf("%d", &choice);
         
