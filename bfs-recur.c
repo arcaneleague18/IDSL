@@ -1,81 +1,67 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-#define MAX 100
+#define MAX 100 
 
-int adj[MAX][MAX];
+int graph[MAX][MAX]; 
 int visited[MAX];
 int queue[MAX];
-int front = -1, rear = -1;
-int n;
+int front = 0, rear = 0;
 
-void enqueue(int v) {
-    if (rear == MAX - 1)
-        return;
-    if (front == -1)
-        front = 0;
-    queue[++rear] = v;
-}
-
-int dequeue() {
-    if (front == -1)
-        return -1;
-    int v = queue[front];
-    if (front == rear)
-        front = rear = -1;
-    else
-        front++;
-    return v;
-}
-
-int isEmpty() {
-    return front == -1;
-}
-
-void BFS_recursive() {
-    if (isEmpty())
+void bfsHelper() {
+    if (front==rear)
         return;
 
-    int v = dequeue();
-    printf("%d ", v);
+    int current = queue[front++]; 
+    printf("%d ", current);  
 
-    for (int i = 0; i < n; i++) {
-        if (adj[v][i] == 1 && !visited[i]) {
-            enqueue(i);
+    for (int i = 0; i < MAX; i++) {
+        if (graph[current][i] == 1 && !visited[i]) {
             visited[i] = 1;
+            queue[rear++]=i;
         }
     }
 
-    BFS_recursive();
+    bfsHelper();
 }
 
-void BFS(int start) {
-    enqueue(start);
-    visited[start] = 1;
-    BFS_recursive();
+void bfs(int startNode, int totalNodes) {
+    for (int i = 0; i < totalNodes; i++) {
+        visited[i] = 0;
+    }
+
+    visited[startNode] = 1;
+    queue[rear++]=startNode;
+    bfsHelper();
 }
 
 int main() {
-    int edges, v1, v2, start;
+    int totalNodes, edges, u, v, startNode;
 
-    printf("Enter number of vertices: ");
-    scanf("%d", &n);
+    printf("Enter the number of nodes: ");
+    scanf("%d", &totalNodes);
 
-    printf("Enter number of edges: ");
+    printf("Enter the number of edges: ");
     scanf("%d", &edges);
 
-    for (int i = 0; i < edges; i++) {
-        printf("Enter edge (v1 v2): ");
-        scanf("%d %d", &v1, &v2);
-        adj[v1][v2] = 1;
-        adj[v2][v1] = 1; // Assuming undirected graph
+    for (int i = 0; i < totalNodes; i++) {
+        for (int j = 0; j < totalNodes; j++) {
+            graph[i][j] = 0;
+        }
     }
 
-    printf("Enter starting vertex: ");
-    scanf("%d", &start);
+    printf("Enter the edges (u v):\n");
+    for (int i = 0; i < edges; i++) {
+        scanf("%d %d", &u, &v);
+        graph[u][v] = 1; 
+        graph[v][u] = 1; 
+    }
 
-    printf("BFS traversal: ");
-    BFS(start);
+    printf("Enter the start node: ");
+    scanf("%d", &startNode);
+
+    printf("BFS Traversal: ");
+    bfs(startNode, totalNodes);
+    printf("\n");
 
     return 0;
 }
