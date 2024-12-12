@@ -10,7 +10,7 @@ int n;
 void DFS(int v) {
     printf("%d ", v);
     visited[v] = 1;
-    for (int i = 0; i < n; i++) {
+    for (int i = 1; i <= MAX; i++) {
         if (adj[v][i] == 1 && !visited[i]) {
             DFS(i);
         }

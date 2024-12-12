@@ -28,7 +28,7 @@ void DFS(int start) {
         if (!visited[v]) {
             printf("%d ", v);
             visited[v] = 1;
-            for (int i = n - 1; i >= 0; i--) {
+            for (int i = MAX; i >= 0; i--) {
                 if (adj[v][i] == 1 && !visited[i]) {
                     push(i);
                 }
